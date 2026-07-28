@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import TopWorkspaceNav from './components/TopWorkspaceNav';
 import HomeWorkspace from './components/HomeWorkspace';
@@ -9,12 +9,11 @@ import FailureInspectorModal from './components/FailureInspectorModal';
 
 import { analyzeStudyNotes } from './services/api';
 import { saveSessionToSpace, saveWorkspaceToCache, clearWorkspaceCache } from './services/storage';
-import { mockStudySessions } from './services/mockData';
 
 export default function AppContent() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [currentWorkspace, setCurrentWorkspace] = useState(mockStudySessions.machineLearning);
-  const [activeSpaceId, setActiveSpaceId] = useState('space_1');
+  const [currentWorkspace, setCurrentWorkspace] = useState(null);
+  const [activeSpaceId, setActiveSpaceId] = useState(null);
   const [workspaceKey, setWorkspaceKey] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +21,6 @@ export default function AppContent() {
   const [selectedErrorSim, setSelectedErrorSim] = useState('');
 
   const [failureHarnessOpen, setFailureHarnessOpen] = useState(false);
-
-  // Pre-seed mock data into cache on initial load if not already present
-  useEffect(() => {
-    saveWorkspaceToCache(mockStudySessions.machineLearning, 'space_1');
-    saveWorkspaceToCache(mockStudySessions.systemDesign, 'space_2');
-    saveWorkspaceToCache(mockStudySessions.algorithms, 'space_3');
-  }, []);
 
   const handleAnalyzeNotes = async (notesText, overrideErrorSim = null, targetTab = 'flashcards') => {
     setIsLoading(true);
@@ -96,15 +88,13 @@ export default function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-cream dark:bg-graphite-950">
       
-      {/* Top Workspace Header Bar */}
+      {/* Top Header Navigation */}
       <TopWorkspaceNav
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
         onNewSession={handleNewSession}
         onOpenFailureHarness={() => setFailureHarnessOpen(true)}
       />
 
-      {/* Main Single-Column Focused Study Workspace Layout */}
+      {/* Main Study Workspace Container */}
       <div className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
         <main className="w-full space-y-6">
@@ -112,11 +102,11 @@ export default function AppContent() {
           {isLoading && <AnalysisProgress />}
 
           {error && !isLoading && (
-            <div className="p-6 rounded-neuron bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200 space-y-3">
+            <div className="p-6 rounded-neuron bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800 text-rose-900 dark:text-rose-200 space-y-3 max-w-xl mx-auto text-center">
               <h4 className="font-extrabold text-sm text-rose-600 dark:text-rose-300">
                 Analysis Failed: {error}
               </h4>
-              <button onClick={handleNewSession} className="neuron-btn-primary py-2 text-xs">
+              <button onClick={handleNewSession} className="neuron-btn-primary py-2 text-xs mx-auto">
                 Try Again
               </button>
             </div>
