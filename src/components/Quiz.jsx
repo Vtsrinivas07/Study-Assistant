@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HelpCircle, CheckCircle2, XCircle, ArrowRight, ArrowLeft, RotateCcw, Award, RefreshCw, Pause, Play, AlertCircle } from 'lucide-react';
 import { recordQuizAnswer, recordQuizCompletion } from '../services/storage';
 
-export default function DuolingoQuiz({ quiz = [], topic = 'Study Topic', onFinishQuiz, onMetricUpdate, onRegenerate, isRegenerating, onBackToWorkspace }) {
+export default function Quiz({ quiz = [], topic = 'Study Topic', onFinishQuiz, onMetricUpdate, onRegenerate, isRegenerating, onBackToWorkspace }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [userAnswers, setUserAnswers] = useState(Array(10).fill(null));
   const [isSubmitted, setIsSubmitted] = useState(false);

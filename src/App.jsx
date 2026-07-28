@@ -4,7 +4,7 @@ import TopWorkspaceNav from './components/TopWorkspaceNav';
 import HomeWorkspace from './components/HomeWorkspace';
 import AnalysisProgress from './components/AnalysisProgress';
 import SwipeableFlashcards from './components/SwipeableFlashcards';
-import DuolingoQuiz from './components/DuolingoQuiz';
+import Quiz from './components/Quiz';
 import FailureInspectorModal from './components/FailureInspectorModal';
 
 import { analyzeStudyNotes } from './services/api';
@@ -145,7 +145,7 @@ export default function AppContent() {
               )}
 
               {activeTab === 'quiz' && currentWorkspace && (
-                <DuolingoQuiz
+                <Quiz
                   key={workspaceKey}
                   quiz={currentWorkspace.quiz}
                   topic={currentWorkspace.topic}
