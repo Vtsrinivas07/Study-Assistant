@@ -3,14 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  envPrefix: ['VITE_', 'GROQ_'],
   server: {
     port: 5176,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3004',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
   },
 });
