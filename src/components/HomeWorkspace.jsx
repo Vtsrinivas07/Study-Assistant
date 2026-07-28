@@ -6,7 +6,7 @@ const POPULAR_TOPICS = [
   "Human Anatomy & Healthcare",
   "Financial Accounting & Business",
   "Environmental Science & Sustainability",
-  "World War II & Modern History"
+  "Ancient Civilizations & World History"
 ];
 
 export default function HomeWorkspace({
