@@ -9,7 +9,7 @@ import FailureInspectorModal from './components/FailureInspectorModal';
 
 import { analyzeStudyNotes } from './services/api';
 import { saveSessionToSpace, saveWorkspaceToCache, clearWorkspaceCache } from './services/storage';
-import { mockStudySessions } from '../server/mockData';
+import { mockStudySessions } from './services/mockData';
 
 export default function AppContent() {
   const [activeTab, setActiveTab] = useState('overview');
