@@ -2,10 +2,7 @@ import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
-export default function TopWorkspaceNav({
-  onNewSession,
-  onOpenFailureHarness
-}) {
+export default function TopWorkspaceNav({ onNewSession }) {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -19,17 +16,8 @@ export default function TopWorkspaceNav({
           </span>
         </div>
 
-        {/* Right Actions: Failure Simulator & Theme Toggle */}
+        {/* Right Actions: Theme Toggle */}
         <div className="flex items-center space-x-2">
-          
-          <button
-            onClick={onOpenFailureHarness}
-            className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-extrabold text-xs transition flex items-center"
-            title="Test AI Failure Resiliency scenarios (Malformed JSON, Timeout, etc.)"
-          >
-            <span>Failure Simulator</span>
-          </button>
-
           <button
             onClick={toggleTheme}
             className="p-2 rounded-xl bg-neutral-100 dark:bg-graphite-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-graphite-700 transition"
@@ -37,7 +25,6 @@ export default function TopWorkspaceNav({
           >
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-neutral-700" />}
           </button>
-
         </div>
 
       </div>

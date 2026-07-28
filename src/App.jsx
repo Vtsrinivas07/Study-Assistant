@@ -5,7 +5,6 @@ import HomeWorkspace from './components/HomeWorkspace';
 import AnalysisProgress from './components/AnalysisProgress';
 import SwipeableFlashcards from './components/SwipeableFlashcards';
 import Quiz from './components/Quiz';
-import FailureInspectorModal from './components/FailureInspectorModal';
 
 import { analyzeStudyNotes } from './services/api';
 import { saveSessionToSpace, saveWorkspaceToCache, clearWorkspaceCache } from './services/storage';
@@ -18,18 +17,13 @@ export default function AppContent() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedErrorSim, setSelectedErrorSim] = useState('');
-
-  const [failureHarnessOpen, setFailureHarnessOpen] = useState(false);
 
   const handleAnalyzeNotes = async (notesText, overrideErrorSim = null, targetTab = 'flashcards') => {
     setIsLoading(true);
     setError(null);
 
-    const errSim = overrideErrorSim !== null ? overrideErrorSim : selectedErrorSim;
-
     try {
-      const result = await analyzeStudyNotes(notesText, { simulateError: errSim });
+      const result = await analyzeStudyNotes(notesText, { simulateError: overrideErrorSim });
 
       if (result.success) {
         setCurrentWorkspace(result.data);
@@ -91,7 +85,6 @@ export default function AppContent() {
       {/* Top Header Navigation */}
       <TopWorkspaceNav
         onNewSession={handleNewSession}
-        onOpenFailureHarness={() => setFailureHarnessOpen(true)}
       />
 
       {/* Main Study Workspace Container */}
@@ -151,16 +144,6 @@ export default function AppContent() {
         </main>
 
       </div>
-
-      {/* Failure Resiliency Harness Modal */}
-      <FailureInspectorModal
-        isOpen={failureHarnessOpen}
-        onClose={() => setFailureHarnessOpen(false)}
-        onTestSimulation={(simId) => {
-          setSelectedErrorSim(simId);
-          handleAnalyzeNotes("Test failure scenario notes", simId);
-        }}
-      />
 
     </div>
   );
